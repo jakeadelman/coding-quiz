@@ -4,3 +4,13 @@
     align-items: center;
     justify-content: center;
 }
+
+.question-ul li{
+    list-style-type: none;
+    padding:5px;
+    background:blue;
+    margin:5px;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
