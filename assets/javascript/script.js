@@ -406,16 +406,16 @@ function fifthQuestion() {
     console.log(answers);
     if (answerLi0.textContent == "quotation marks") {
       console.log("correct");
-      answers["answer4"] = "correct";
+      answers["answer5"] = "correct";
       localStorage.setItem("answers", JSON.stringify(answers));
     } else {
       console.log("incorrect");
-      answers["answer4"] = "incorrect";
+      answers["answer5"] = "incorrect";
       localStorage.setItem("answers", JSON.stringify(answers));
     }
     questionUl.innerHTML = "";
     question1El.remove();
-    fifthQuestion();
+    end();
   });
 
   var answerLi1 = document.querySelector("#answer-li-1");
@@ -424,16 +424,16 @@ function fifthQuestion() {
     answers = JSON.parse(answers);
     if (answerLi1.textContent == "quotation marks") {
       console.log("correct");
-      answers["answer4"] = "correct";
+      answers["answer5"] = "correct";
       localStorage.setItem("answers", JSON.stringify(answers));
     } else {
       console.log("incorrect");
-      answers["answer4"] = "incorrect";
+      answers["answer5"] = "incorrect";
       localStorage.setItem("answers", JSON.stringify(answers));
     }
     questionUl.innerHTML = "";
     question1El.remove();
-    fifthQuestion();
+    end();
   });
 
   var answerLi2 = document.querySelector("#answer-li-2");
@@ -442,16 +442,16 @@ function fifthQuestion() {
     answers = JSON.parse(answers);
     if (answerLi2.textContent == "quotation marks") {
       console.log("correct");
-      answers["answer4"] = "correct";
+      answers["answer5"] = "correct";
       localStorage.setItem("answers", JSON.stringify(answers));
     } else {
       console.log("incorrect");
-      answers["answer4"] = "incorrect";
+      answers["answer5"] = "incorrect";
       localStorage.setItem("answers", JSON.stringify(answers));
     }
     questionUl.innerHTML = "";
     question1El.remove();
-    fifthQuestion();
+    end();
   });
 
   var answerLi3 = document.querySelector("#answer-li-3");
@@ -460,15 +460,74 @@ function fifthQuestion() {
     answers = JSON.parse(answers);
     if (answerLi3.textContent == "quotation marks") {
       console.log("correct");
-      answers["answer4"] = "correct";
+      answers["answer5"] = "correct";
       localStorage.setItem("answers", JSON.stringify(answers));
     } else {
       console.log("incorrect");
-      answers["answer4"] = "incorrect";
+      answers["answer5"] = "incorrect";
       localStorage.setItem("answers", JSON.stringify(answers));
     }
     questionUl.innerHTML = "";
     question1El.remove();
-    fifthQuestion();
+    end();
   });
+}
+
+// your score section
+function end() {
+  function submitForm(e) {
+    e.preventDefault();
+    console.log("submitted");
+    var initialsInput = document.getElementById("initialsInput");
+    var initialsScore = document.getElementById("score");
+    initialsScore = initialsScore.textContent.split(" ");
+    var initialsInputText = initialsInput.value;
+    console.log(initialsInputText);
+    var score = {
+      initials: initialsInputText,
+      score: initialsScore[3],
+    };
+    localStorage.setItem("score", JSON.stringify(score));
+    initialsForm.remove();
+  }
+
+  var initialsForm = document.createElement("form");
+  var initialsInput = document.createElement("input");
+  var initialsButton = document.createElement("input");
+  var initialsLabel = document.createElement("label");
+  initialsInput.setAttribute("id", "initialsInput");
+  var score = document.createElement("p");
+  score.setAttribute("id", "score");
+  initialsLabel.textContent = "Initials";
+  initialsButton.setAttribute("type", "button");
+  initialsButton.textContent = "Submit";
+  initialsButton.setAttribute("value", "Submit");
+  initialsButton.addEventListener("click", submitForm);
+
+  var theScore = localStorage.getItem("answers");
+  theScore = JSON.parse(theScore);
+  console.log(theScore);
+
+  let baseScore = 0;
+  if (theScore["answer1"] == "correct") {
+    baseScore += 20;
+  }
+  if (theScore["answer2"] == "correct") {
+    baseScore += 20;
+  }
+  if (theScore["answer3"] == "correct") {
+    baseScore += 20;
+  }
+  if (theScore["answer4"] == "correct") {
+    baseScore += 20;
+  }
+  if (theScore["answer5"] == "correct") {
+    baseScore += 20;
+  }
+  score.textContent = "Your score is: " + baseScore.toString();
+  containerEl.appendChild(score);
+  containerEl.appendChild(initialsForm);
+  initialsForm.appendChild(initialsLabel);
+  initialsForm.appendChild(initialsInput);
+  initialsForm.appendChild(initialsButton);
 }
