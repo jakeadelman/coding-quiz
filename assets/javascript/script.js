@@ -494,27 +494,38 @@ function submitForm(e) {
 
   let newScore = {};
   let remainingArr = [];
-  for (var i = 0; i < initScores.length; i++) {
-    for (var [key, value] of Object.entries(initScores[i])) {
-      if (key == "initials" && value == score.initials) {
-        newScore.initials = score.initials;
-        console.log(score.initials);
-        if (key == "score" && value > score.score) {
-          newScore.score = value;
-        } else {
-          newScore.score = score.score;
+
+  if (initScores != undefined) {
+    for (var i = 0; i < initScores.length; i++) {
+      for (var [key, value] of Object.entries(initScores[i])) {
+        if (key == "initials" && value == score.initials) {
+          newScore.initials = score.initials;
+          console.log(score.initials);
+          if (key == "score" && value > score.score) {
+            newScore.score = value;
+          } else {
+            newScore.score = score.score;
+          }
         }
       }
+
+      remainingArr = initScores.filter(
+        (data) => data.initials != newScore.initials
+      );
+
+      remainingArr.push(score);
+      console.log(remainingArr);
+      localStorage.setItem("score", JSON.stringify(remainingArr));
     }
-
-    remainingArr = initScores.filter(
-      (data) => data.initials != newScore.initials
-    );
-
-    remainingArr.push(score);
-    console.log(remainingArr);
-    localStorage.setItem("score", JSON.stringify(remainingArr));
+  } else {
+    console.log("here");
+    var scoresEnd = [];
+    scoresEnd.push(score);
+    localStorage.setItem("score", JSON.stringify(scoresEnd));
   }
+
+  var highscoresList = localStorage.getItem("score");
+  highscoresList = JSON.parse(highscoresList);
 
   console.log(remainingArr);
   var highscoresLabel = document.createElement("h3");
@@ -524,10 +535,10 @@ function submitForm(e) {
   var highscoresUl = document.createElement("ul");
   highscoresUl.setAttribute("style", "list-style-type:none");
   containerEl.appendChild(highscoresUl);
-  for (var b = 0; b < remainingArr.length; b++) {
+  for (var b = 0; b < highscoresList.length; b++) {
     var highscoresLi = document.createElement("li");
     highscoresLi.textContent =
-      remainingArr[b].initials + ":" + remainingArr[b].score;
+      highscoresList[b].initials + ":" + highscoresList[b].score;
     highscoresUl.appendChild(highscoresLi);
   }
 
