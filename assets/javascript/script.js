@@ -14,6 +14,19 @@ okButtonEl.addEventListener("click", function () {
   firstQuestion();
 });
 
+// timer
+var timerEl = document.createElement("p");
+timerEl.textContent = 60;
+timerEl.setAttribute("id", "timer");
+containerEl.appendChild(timerEl);
+setInterval(function () {
+  if (timerEl.textContent == 0) {
+    location.reload();
+  } else {
+    timerEl.textContent -= 1;
+  }
+}, 1000);
+
 // first question
 function firstQuestion() {
   var question1El = document.createElement("p");
@@ -542,8 +555,18 @@ function submitForm(e) {
     highscoresUl.appendChild(highscoresLi);
   }
 
+  var goBackButtonEl = document.createElement("button");
+  goBackButtonEl.textContent = "Go Back";
+  goBackButtonEl.addEventListener("click", goBackButton);
+  containerEl.appendChild(goBackButtonEl);
+
   initialsForm.remove();
   initialsScore1.remove();
+}
+
+// go back button
+function goBackButton() {
+  location.reload();
 }
 
 // your score section

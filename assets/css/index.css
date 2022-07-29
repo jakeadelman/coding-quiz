@@ -14,3 +14,9 @@
     border-radius:5px;
     cursor:pointer;
 }
+
+#timer{
+    position: fixed;
+    right: 5%;
+    top: 2%;
+}
