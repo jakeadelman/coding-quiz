@@ -473,30 +473,77 @@ function fifthQuestion() {
   });
 }
 
-// your score section
-function end() {
-  function submitForm(e) {
-    e.preventDefault();
-    console.log("submitted");
-    var initialsInput = document.getElementById("initialsInput");
-    var initialsScore = document.getElementById("score");
-    initialsScore = initialsScore.textContent.split(" ");
-    var initialsInputText = initialsInput.value;
-    console.log(initialsInputText);
-    var score = {
-      initials: initialsInputText,
-      score: initialsScore[3],
-    };
-    localStorage.setItem("score", JSON.stringify(score));
-    initialsForm.remove();
+// on submit form section
+function submitForm(e) {
+  e.preventDefault();
+  console.log("submitted");
+  var initialsInput = document.getElementById("initialsInput");
+  var initialsForm = document.getElementById("initialsForm");
+  var initialsScore1 = document.getElementById("score");
+  initialsScore = initialsScore1.textContent.split(" ");
+  var initialsInputText = initialsInput.value;
+  console.log(initialsInputText);
+  var score = {
+    initials: initialsInputText,
+    score: initialsScore[3],
+  };
+
+  var initScores = localStorage.getItem("score");
+  initScores = JSON.parse(initScores);
+  console.log(initScores);
+
+  let newScore = {};
+  let remainingArr = [];
+  for (var i = 0; i < initScores.length; i++) {
+    for (var [key, value] of Object.entries(initScores[i])) {
+      if (key == "initials" && value == score.initials) {
+        newScore.initials = score.initials;
+        console.log(score.initials);
+        if (key == "score" && value > score.score) {
+          newScore.score = value;
+        } else {
+          newScore.score = score.score;
+        }
+      }
+    }
+
+    remainingArr = initScores.filter(
+      (data) => data.initials != newScore.initials
+    );
+
+    remainingArr.push(score);
+    console.log(remainingArr);
+    localStorage.setItem("score", JSON.stringify(remainingArr));
   }
 
+  console.log(remainingArr);
+  var highscoresLabel = document.createElement("h3");
+  highscoresLabel.textContent = "Highscores";
+  containerEl.appendChild(highscoresLabel);
+
+  var highscoresUl = document.createElement("ul");
+  highscoresUl.setAttribute("style", "list-style-type:none");
+  containerEl.appendChild(highscoresUl);
+  for (var b = 0; b < remainingArr.length; b++) {
+    var highscoresLi = document.createElement("li");
+    highscoresLi.textContent =
+      remainingArr[b].initials + ":" + remainingArr[b].score;
+    highscoresUl.appendChild(highscoresLi);
+  }
+
+  initialsForm.remove();
+  initialsScore1.remove();
+}
+
+// your score section
+function end() {
+  var score = document.createElement("p");
   var initialsForm = document.createElement("form");
+  initialsForm.setAttribute("id", "initialsForm");
   var initialsInput = document.createElement("input");
   var initialsButton = document.createElement("input");
   var initialsLabel = document.createElement("label");
   initialsInput.setAttribute("id", "initialsInput");
-  var score = document.createElement("p");
   score.setAttribute("id", "score");
   initialsLabel.textContent = "Initials";
   initialsButton.setAttribute("type", "button");
