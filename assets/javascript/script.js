@@ -546,10 +546,14 @@ function submitForm(e) {
   containerEl.appendChild(highscoresLabel);
 
   var highscoresUl = document.createElement("ul");
-  highscoresUl.setAttribute("style", "list-style-type:none");
+  highscoresUl.setAttribute("style", "list-style-type:none; padding:0px");
   containerEl.appendChild(highscoresUl);
   for (var b = 0; b < highscoresList.length; b++) {
     var highscoresLi = document.createElement("li");
+    highscoresLi.setAttribute(
+      "style",
+      "padding:5px; background:violet; margin:2px;"
+    );
     highscoresLi.textContent =
       highscoresList[b].initials + ":" + highscoresList[b].score;
     highscoresUl.appendChild(highscoresLi);
@@ -581,6 +585,7 @@ function end() {
   score.setAttribute("id", "score");
   initialsLabel.textContent = "Initials";
   initialsButton.setAttribute("type", "button");
+  initialsButton.setAttribute("id", "input-button");
   initialsButton.textContent = "Submit";
   initialsButton.setAttribute("value", "Submit");
   initialsButton.addEventListener("click", submitForm);

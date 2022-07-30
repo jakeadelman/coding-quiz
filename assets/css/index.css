@@ -20,3 +20,12 @@
     right: 5%;
     top: 2%;
 }
+
+button, #input-button{
+    padding: 5px 10px;
+    background: purple;
+    color:white;
+    border: none;
+    cursor:pointer;
+    border-radius:5px;
+}
